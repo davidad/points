@@ -5,7 +5,6 @@ require 'uri'
 require 'digest/sha1'
 require 'time'
 set :port, 8080
-set :static, true
 
 def get_or_post(path, opts={}, &block)
   get(path, opts, &block)
@@ -68,7 +67,7 @@ end
 
 def read_user
   if(not validToken) then
-    halt 302, {'Location':'http://points.xvm.mit.edu'}
+    halt 302, {'Location'=>'http://points.xvm.mit.edu:8080/'}, ""
   end
   database_query = "https://graph.facebook.com/me?" + $app_token;
   facebook_data = JSON.load(URI.parse(URI.encode(database_query)).read)
