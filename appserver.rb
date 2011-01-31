@@ -13,6 +13,10 @@ def failure(msg)
     'error'=>msg }.to_json
 end
 
+get '/' do
+  "This is the JSON app server. Perhaps you want <a href=\"http://points.xvm.mit.edu\">the Web front-end</a> (currently non-existent)?<br/>Otherwise, please submit a request according to the following API:<br/><pre>/newuser?username=[USERNAME]  (returns API key on success)\n/getpoints?username=[USERNAME]&apikey=[APIKEY]  (returns current points total)\n/getpoints/history?username=[USERNAME]&apikey=[APIKEY]"
+end
+
 get_or_post '/newuser' do
   content_type :json
   username = params['username']
