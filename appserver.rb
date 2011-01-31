@@ -14,8 +14,8 @@ end
 $app_id = 185939958095207
 $default_uri = "http://points.xvm.mit.edu:8080/"
 $app_secret = "5972a599ecfa901530c4b404f68ad5c7"
-$app_token
-$app_exp
+$app_token = nil
+# (unimplemented and unused) # $app_exp = nil
 
 get '/' do
   if(!params['code']) then
@@ -24,9 +24,7 @@ get '/' do
   else
     token_url = "https://graph.facebook.com/oauth/access_token?client_id=#{$app_id}&redirect_uri=#{URI.encode($default_uri)}&client_secret=#{$app_secret}&code=#{params['code']}"
     $app_token = URI.parse(URI.encode(token_url)).read
-    $app_exp = Time.now
-    $app_exp
- #   $app_token = $app_token.split('&')[0].split('=')[1]
+    $app_token = $app_token.split('&')[0].split('=')[1]
   end
 end
 
@@ -44,10 +42,8 @@ get_or_post '/newuser' do
   elsif(File.file?(username)) then
     return failure("User #{username} already exists")
   else
-    apikey = Digest::SHA1.hexdigest(Time.now.to_s + rand(1000000).to_s)
     userfile = File.new(username,"w+")
-    data = {'apikey' => apikey,
-            'points_history' =>
+    data = {'points_history' =>
               [{'time' => Time.now.to_s, 'points' => 0}]}
     userfile.puts(data.to_json)
     userfile.close
@@ -57,15 +53,25 @@ get_or_post '/newuser' do
   end
 end
 
-def read_user(params)
-  if(!File.file?(params['username'])) then
-    halt failure("User does not exist")
+def validToken
+  if $app_token == nil then
+    return false
   end
-  userfile = File.new(params['username'],"r")
+  return true#should eventually check for expiredness.
+end
+
+def read_user
+  if(not validToken) then
+    halt 302, {'Location':'http://points.xvm.mit.edu'}
+  end
+  database_query = "https://graph.facebook.com/me?" + $app_token;
+  facebook_data = JSON.load(URI.parse(URI.encode(database_query)).read)
+  
+  if(!File.file?(facebook_data['id'])) then
+    #make a new user
+  end
+  userfile = File.new(facebook_data['id'],"r")
   data = JSON.load(userfile)
-  if(data['apikey'] != params['apikey']) then
-    halt failure("Incorrect API key")
-  end
   return data
 end
 
