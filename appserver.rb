@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'json'
 require 'digest/sha1'
-require 'net/http'
+require 'net/https'
 require 'uri'
 set :port, 8080
 
@@ -20,7 +20,7 @@ get '/facebooklogin' do
 end
 
 get '/authenticate' do
-   Net::HTTP.get_print "https://graph.facebook.com", "/oauth/access_token?client_id=#{$app_id}&redirect_uri=#{$default_url}&client_secret=#{$app_secret}&code=#{params['code']}")
+   Net::HTTP.get_print "https://graph.facebook.com", "/oauth/access_token?client_id=#{$app_id}&redirect_uri=#{$default_url}&client_secret=#{$app_secret}&code=#{params['code']}"
 end
 
 def failure(msg)
