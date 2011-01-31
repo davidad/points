@@ -21,7 +21,7 @@ get '/' do
     "<script> top.location.href = '#{dialog_url}' </script>"
   else
     token_url = "https://graph.facebook.com/oauth/access_token?client_id=#{$app_id}&redirect_uri=#{URI.encode($default_uri)}&client_secret=#{$app_secret}&code=#{params['code']}"
-    $app_token = URI.parse(URI.encode(token_url)).read
+    $app_token = URI.parse(URI.encode(token_url)).read.split('=')[1]
     $app_token
   end
 end
