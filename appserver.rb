@@ -27,7 +27,7 @@ def failure(msg)
 end
 
 get '/' do
-  "This is the JSON app server. Perhaps you want <a href=\"http://points.xvm.mit.edu\">the Web front-end</a> (currently non-existent)?<br/>Otherwise, please submit a request according to the following API:<br/><pre>/newuser?username=[USERNAME]  (returns API key on success)\n/getpoints?username=[USERNAME]&apikey=[APIKEY]  (returns current points total)\n/getpoints/history?username=[USERNAME]&apikey=[APIKEY]  (returns a recent history of points; optionally specify length=[INT])\n/setpoints?username=[USERNAME]&apikey=[APIKEY]&delta=[INT]  (adds the delta to the current points and returns the new points total. delta can be negative)</pre>"
+  "This is the JSON app server. Perhaps you want <a href=\"http://points.xvm.mit.edu\">the Web front-end</a> (currently non-existent)?<br/>Otherwise, please submit a request according to the following API:<br/><pre>/newuser?username=[USERNAME]  (returns API key on success)\n/getpoints?username=[USERNAME]&amp;apikey=[APIKEY]  (returns current points total)\n/getpoints/history?username=[USERNAME]&amp;apikey=[APIKEY]  (returns a recent history of points; optionally specify length=[INT])\n/setpoints?username=[USERNAME]&amp;apikey=[APIKEY]&amp;delta=[INT]  (adds the delta to the current points and returns the new points total. delta can be negative)</pre>"
 end
 
 get_or_post '/newuser' do
