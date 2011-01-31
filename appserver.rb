@@ -1,9 +1,8 @@
 require 'sinatra'
 require 'json'
-require 'digest/sha1'
-require 'net/http'
-require 'net/https'
+require 'open-uri'
 require 'uri'
+require 'digest/sha1'
 set :port, 8080
 
 def get_or_post(path, opts={}, &block)
@@ -11,19 +10,20 @@ def get_or_post(path, opts={}, &block)
   post(path, opts, &block)
 end
 
-$app_secret = "fbf03b0a9c5175ddecc1ab01bbe5a370"
-$app_id = "196454990366058"
-$api_key = "590cdce4e47bccec1f78b5ff2729f7de"
-$default_url = "http://points.xvm.mit.edu:8080/"
+$app_id = 185939958095207
+$default_uri = "http://points.xvm.mit.edu:8080/"
+$app_secret = "5972a599ecfa901530c4b404f68ad5c7"
+$app_token
 
-get '/facebooklogin' do
-  halt 302, {'Location' => "https://www.facebook.com/dialog/oauth?client_id=#{$app_id}&redirect_uri=#{$default_url}authenticate"}, 'Loading...'
-end
-
-get '/authenticate' do
-  Net::HTTP.post URI.parse("https://graph.facebook.com/oauth/access_token?client_id=#{URI.encode($app_id)}&redirect_uri=#{URI.encode($default_url)}&client_secret=#{URI.encode($app_secret)}&code=#{URI.encode(params['code'])}")
-
-#  "https://graph.facebook.com/oauth/access_token?client_id=#{URI.encode($app_id)}&redirect_uri=#{URI.encode($default_url)}&client_secret=#{URI.encode($app_secret)}&code=#{URI.encode(params['code'])}"
+get '/' do
+  if(!params['code']) then
+    dialog_url = "http://www.facebook.com/dialog/oauth?client_id=#{$app_id}&redirect_uri=#{URI.encode($default_uri)}"
+    "<script> top.location.href = '#{dialog_url}' </script>"
+  else
+    token_url = "https://graph.facebook.com/oauth/access_token?client_id=#{$app_id}&redirect_uri=#{URI.encode($default_uri)}&client_secret=#{$app_secret}&code=#{params['code']}"
+    $app_token = URI.parse(URI.encode(token_url)).read.split('=')[1]
+    $app_token
+  end
 end
 
 def failure(msg)
@@ -31,9 +31,6 @@ def failure(msg)
     'error'=>msg }.to_json
 end
 
-get '/' do
-  "This is the JSON app server. Perhaps you want <a href=\"http://points.xvm.mit.edu\">the Web front-end</a> (currently non-existent)?<br/>Otherwise, please submit a request according to the following API:<br/><pre>/newuser?username=[USERNAME]  (returns API key on success)\n/getpoints?username=[USERNAME]&amp;apikey=[APIKEY]  (returns current points total)\n/getpoints/history?username=[USERNAME]&amp;apikey=[APIKEY]  (returns a recent history of points; optionally specify length=[INT])\n/setpoints?username=[USERNAME]&amp;apikey=[APIKEY]&amp;delta=[INT]  (adds the delta to the current points and returns the new points total. delta can be negative)</pre>"
-end
 
 get_or_post '/newuser' do
   content_type :json
