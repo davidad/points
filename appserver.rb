@@ -11,7 +11,7 @@ def get_or_post(path, opts={}, &block)
 end
 
 $app_id = 185939958095207
-$default_uri = "http://points.xvm.mit.edu/"
+$default_uri = "http://points.xvm.mit.edu:8080/"
 $app_secret = "5972a599ecfa901530c4b404f68ad5c7"
 
 get '/' do
