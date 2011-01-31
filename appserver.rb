@@ -85,5 +85,5 @@ get_or_post '/getpoints/history' do
     length=params['length']
   end
   { 'success'=>1,
-    'points_history'=>data['points_history'][-1,-(length.to_i)] }.to_json
+    'points_history'=>data['points_history'].pop(length) }.to_json
 end
