@@ -68,7 +68,10 @@ get_or_post '/setpoints' do
     halt failure("Delta must be an integer")
   end
   current_points=data['points_history'][-1]['points']
-  data['points_history'].push({'points' => current_points.to_i+params['delta'].to_i,
+  new_points=current_points.to_i+params['delta'].to_i
+  data['points_history'].push({'points' => new_points,
                                'time' => Time.now.to_s})
   write_user(params,data)
+  { 'success'=>1,
+    'points' => new_points }.to_json
 end
