@@ -27,6 +27,7 @@ get_or_post '/newuser' do
                 'points_history' =>
                   [{'time' => Time.now.to_s, 'points' => 0}]}
     userfile.puts(userdata.to_json)
+    userfile.close
     { 'success'=>1,
       'points'=>0,
       'apikey'=>apikey }.to_json
