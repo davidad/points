@@ -18,7 +18,7 @@ end
 
 get '/authenticate' do
   #there is a variable passed here called caode that can be used to get more stuff.
-  'not yet implemented'
+  'got'+params['code']
 end
 
 def failure(msg)
