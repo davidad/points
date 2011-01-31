@@ -11,10 +11,10 @@ end
 get_or_post '/newuser' do
   content_type :json
   username = params['username']
-  if(!/\A\w\+\Z/=~username) then #check if username consists entirely of sane characters
+  if(!(/\A\w\+\Z/=~username)) then #check if username consists entirely of sane characters
     { 'success'=>0,
       'error'=>"Username must consist only of digits, uppercase or lowercase letters, and underscores." }.to_json
-  if(File.file?(username)) then
+  elsif(File.file?(username)) then
     { 'success'=>0,
       'error'=>"User #{username} already exists" }.to_json
   else
