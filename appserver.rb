@@ -14,7 +14,7 @@ $app_id = 185939958095207
 $default_uri = "http://points.xvm.mit.edu/"
 $app_secret = "5972a599ecfa901530c4b404f68ad5c7"
 
-get '/' do
+get '/facebookLogin' do
   if(!params['code']) then
     dialog_url = "http://www.facebook.com/dialog/oauth?client_id=#{$app_id}&redirect_uri=#{URI.encode($default_uri)}"
     "<script> top.location.href = '#{dialog_url}' </script>"
