@@ -13,7 +13,7 @@ $app_id = "196454990366058"
 $api_key = "590cdce4e47bccec1f78b5ff2729f7de"
 
 get '/facebooklogin' do
-  halt 302, {'Location' => 'https://www.facebook.com/dialog/oauth?client_id=YOUR_APP_ID&redirect_uri=points.xvm.mit.edu/authenticate'}, 'Loading...'
+  halt 302, {'Location' => 'https://www.facebook.com/dialog/oauth?client_id=#{$app_id}&redirect_uri=points.xvm.mit.edu/authenticate'}, 'Loading...'
 end
 
 get '/authenticate' do
@@ -27,7 +27,7 @@ def failure(msg)
 end
 
 get '/' do
-  "This is the JSON app server. Perhaps you want <a href=\"http://points.xvm.mit.edu\">the Web front-end</a> (currently non-existent)?<br/>Otherwise, please submit a request according to the following API:<br/><pre>/newuser?username=[USERNAME]  (returns API key on success)\n/getpoints?username=[USERNAME]&apikey=[APIKEY]  (returns current points total)\n/getpoints/history?username=[USERNAME]&apikey=[APIKEY]"
+  "This is the JSON app server. Perhaps you want <a href=\"http://points.xvm.mit.edu\">the Web front-end</a> (currently non-existent)?<br/>Otherwise, please submit a request according to the following API:<br/><pre>/newuser?username=[USERNAME]  (returns API key on success)\n/getpoints?username=[USERNAME]&apikey=[APIKEY]  (returns current points total)\n/getpoints/history?username=[USERNAME]&apikey=[APIKEY]  (returns "
 end
 
 get_or_post '/newuser' do
