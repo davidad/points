@@ -5,6 +5,7 @@ require 'uri'
 require 'digest/sha1'
 require 'time'
 set :port, 8080
+set :static, true
 
 def get_or_post(path, opts={}, &block)
   get(path, opts, &block)
