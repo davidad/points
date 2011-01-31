@@ -1,10 +1,8 @@
 require 'sinatra'
 require 'json'
-require 'digest/sha1'
-require 'net/http'
-require 'net/https'
-require 'uri'
 require 'open-uri'
+require 'uri'
+require 'digest/sha1'
 set :port, 8080
 
 def get_or_post(path, opts={}, &block)
@@ -12,20 +10,21 @@ def get_or_post(path, opts={}, &block)
   post(path, opts, &block)
 end
 
-$app_secret = "fbf03b0a9c5175ddecc1ab01bbe5a370"
-$app_id = "196454990366058"
-$api_key = "590cdce4e47bccec1f78b5ff2729f7de"
-$default_url = "http://points.xvm.mit.edu:8080/"
+$app_id = 185939958095207
+$default_uri = "http://points.xvm.mit.edu/"
+$app_secret = "5972a599ecfa901530c4b404f68ad5c7"
 
-get '/facebooklogin' do
-  halt 302, {'Location' => "https://www.facebook.com/dialog/oauth?client_id=#{$app_id}&redirect_uri=#{$default_url}authenticate"}, 'Loading...'
+get '/' do
+  if(!params['code']) then
+    dialog_url = "http://www.facebook.com/dialog/oauth?client_id=#{$app_id}&redirect_uri=#{URI.encode($default_uri)}"
+    "<script> top.location.href = '#{dialog_url}' </script>"
+  else
+    token_url = "https://graph.facebook.com/oauth/access_token?client_id=#{$app_id}&redirect_uri=#{URI.encode($default_uri)}&client_secret=#{$app_secret}&code=#{params['code']}"
+    URI.parse(URI.encode(token_url)).read
+  end
 end
 
-get '/authenticate' do
-  URI.parse(URI.encode("https://graph.facebook.com/oauth/access_token?client_id=#{URI.encode($app_id)}&redirect_uri=#{URI.encode($default_url)}&client_secret=#{URI.encode($app_secret)}&code=#{URI.encode(params['code'])}")).read
 
-#  "https://graph.facebook.com/oauth/access_token?client_id=#{URI.encode($app_id)}&redirect_uri=#{URI.encode($default_url)}&client_secret=#{URI.encode($app_secret)}&code=#{URI.encode(params['code'])}"
-end
 
 def failure(msg)
   { 'success'=>0,
