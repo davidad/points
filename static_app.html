@@ -51,7 +51,7 @@
       var username = "testuser"
       function init() {
         document.getElementsByClassName('username')[0].innerHTML = username;
-        $.getJSON("http://points.xvm.mit.edu/getpoints?username="+username+"&apikey="+apikey,{},function(data) {
+        $.getJSON("http://points.xvm.mit.edu:8080/getpoints?username="+username+"&apikey="+apikey,{},function(data) {
             document.getElementsByClassName('points')[0].innerHTML = data['points'];
             });
       }
