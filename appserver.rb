@@ -13,7 +13,7 @@ $app_id = "196454990366058"
 $api_key = "590cdce4e47bccec1f78b5ff2729f7de"
 
 get '/facebooklogin' do
-  halt 302, {'Location' => 'https://www.facebook.com/dialog/oauth?client_id=YOUR_APP_ID&redirect_uri=points.xvm.mit.edu/authenticate'}
+  halt 302, {'Location' => 'https://www.facebook.com/dialog/oauth?client_id=YOUR_APP_ID&redirect_uri=points.xvm.mit.edu/authenticate'}, 'Loading...'
 end
 
 get '/authenticate' do
