@@ -1,6 +1,7 @@
 require 'sinatra'
+require 'json'
 set :port, 8080
 
-get '/' do
-  'Hello, I\'m the app server.'
+post '/test_json' do
+  { 'key' => 'value' }.to_json
 end
