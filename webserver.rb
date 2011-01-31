@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'json'
 
+:set port, 80
+
 get '/' do
   haml :index
 end
