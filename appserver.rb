@@ -20,7 +20,7 @@ get '/facebooklogin' do
 end
 
 get '/authenticate' do
-  http = Net::HTTP.new('graph.facebook.com', 443)
+  http = Net::HTTP.new('graph.facebook.com')
   http.use_ssl = true
   path = "/oauth/access_token?client_id=#{$app_id}&redirect_uri=#{URI.encode($default_url)}&client_secret=#{$app_secret}&code=#{params['code']}"
   resp, data = http.get(path, nil)
