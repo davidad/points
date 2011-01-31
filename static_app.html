@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Points!</title>
+    <style type="text/css">
+      .container {
+        text-align: center;
+      }
+      .content {
+        width: 480px;
+        display: inline-block;
+      }
+      .welcome {
+        line-height: 60px;
+        font-size: 40px;
+        font-family: serif;
+      }
+      #pointsbox {
+        border: 3px outset;
+        background-color: #aaaaaa;
+        height:40px;
+        font-size: 38px;
+        width:100%;
+      }
+      .plus_button, .minus_button {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 50px;
+        width: 60px;
+        height: 60px;
+        border: 1px black solid
+      }
+      .plus_button {
+        background-color: green
+      }
+      .minus_button {
+        background-color: red
+      }
+      .pm_field {
+        display: inline-block;
+        width:300px;
+        line-height:57px;
+        font-size:46px;
+        vertical-align: middle;
+        text-align: center;
+      }
+    </style>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript">
+      var apikey = "5f637f80e8acf4c03383ec4a4ae4406918a8df80"
+      var username = "testuser"
+      function init() {
+        document.getElementsByClassName('username')[0].innerHTML = username;
+        $.getJSON("http://points.xvm.mit.edu/getpoints?username="+username+"&apikey="+apikey,{},function(data) {
+            document.getElementsByClassName('points')[0].innerHTML = data['points'];
+            });
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <div class="container">
+      <div class="content">
+        <div class="welcome">Welcome, <span class="username"></span>!</div>
+        <div id="pointsbox">Points: <span class="points"></span></div>
+        <div id="controls"><form>
+          <span class="plus_button" onclick="plus">+</span>
+          <input type="text" class="pm_field"></input>
+          <span class="minus_button" onclick="minus">-</span>
+      </form></div>
+      </div>
+    </div>
+  </body>
+</html>
