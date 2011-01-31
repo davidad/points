@@ -28,7 +28,6 @@ get '/' do
     $app_token
     "something here"
   end
-  "and something here"
 #  halt 302, {'Location':'http://points.xvm.mit.edu:8080/static_app.html'}
   
 end
