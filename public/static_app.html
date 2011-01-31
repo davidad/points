@@ -49,11 +49,32 @@
     <script type="text/javascript">
       var apikey = "5f637f80e8acf4c03383ec4a4ae4406918a8df80"
       var username = "testuser"
+      var prefix = "http://points.xvm.mit.edu:8080"
+      function update_points(data) {
+        document.getElementsByClassName('points')[0].innerHTML = data['points'];
+      }
       function init() {
         document.getElementsByClassName('username')[0].innerHTML = username;
-        $.getJSON("http://points.xvm.mit.edu:8080/getpoints?username="+username+"&apikey="+apikey,{},function(data) {
-            document.getElementsByClassName('points')[0].innerHTML = data['points'];
-            });
+	var url = prefix+"/getpoints?username="+username+"&apikey="+apikey;
+        $.getJSON(url,{},update_points);
+      }
+      function plus() {
+	var delta = parseInt(document.getElementsByClassName('pm_field')[0].value);
+  if(isNaN(delta)) {
+    document.getElementsByClassName('pm_field')[0].value=1;
+    delta = 1;
+  }
+	var url = prefix+"/setpoints?username="+username+"&apikey="+apikey+"&delta="+delta;
+	$.getJSON(url,{},update_points);
+      }
+      function minus() {
+	var delta = parseInt(document.getElementsByClassName('pm_field')[0].value);
+  if(isNaN(delta)) {
+    document.getElementsByClassName('pm_field')[0].value=1;
+    delta = 1;
+  }
+	var url = prefix+"/setpoints?username="+username+"&apikey="+apikey+"&delta=-"+delta;
+	$.getJSON(url,{},update_points);
       }
     </script>
   </head>
@@ -63,9 +84,9 @@
         <div class="welcome">Welcome, <span class="username"></span>!</div>
         <div id="pointsbox">Points: <span class="points"></span></div>
         <div id="controls"><form>
-          <span class="plus_button" onclick="plus">+</span>
+          <span class="plus_button" onclick="plus()">+</span>
           <input type="text" class="pm_field"></input>
-          <span class="minus_button" onclick="minus">-</span>
+          <span class="minus_button" onclick="minus()">-</span>
       </form></div>
       </div>
     </div>
