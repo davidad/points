@@ -4,6 +4,7 @@ require 'digest/sha1'
 require 'net/http'
 require 'net/https'
 require 'uri'
+require 'open-uri'
 set :port, 8080
 
 def get_or_post(path, opts={}, &block)
