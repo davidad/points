@@ -21,9 +21,9 @@ end
 
 get '/authenticate' do
 
-  # Net::HTTP.get_print URI.parse("https://graph.facebook.com/oauth/access_token?client_id=#{$app_id}&redirect_uri=#{$default_url}&client_secret=#{$app_secret}&code=#{params['code']}")
+  Net::HTTP.get URI.parse("https://graph.facebook.com/oauth/access_token?client_id=#{$app_id}&redirect_uri=#{$default_url}&client_secret=#{$app_secret}&code=#{params['code']}")
 
-  "https://graph.facebook.com/oauth/access_token?client_id=#{$app_id}&redirect_uri=#{$default_url}&client_secret=#{$app_secret}&code=#{params['code']}"
+  # "https://graph.facebook.com/oauth/access_token?client_id=#{$app_id}&redirect_uri=#{$default_url}&client_secret=#{$app_secret}&code=#{params['code']}"
 end
 
 def failure(msg)
