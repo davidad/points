@@ -13,6 +13,7 @@ end
 $app_id = 185939958095207
 $default_uri = "http://points.xvm.mit.edu:8080/"
 $app_secret = "5972a599ecfa901530c4b404f68ad5c7"
+$app_token
 
 get '/' do
   if(!params['code']) then
@@ -20,11 +21,10 @@ get '/' do
     "<script> top.location.href = '#{dialog_url}' </script>"
   else
     token_url = "https://graph.facebook.com/oauth/access_token?client_id=#{$app_id}&redirect_uri=#{URI.encode($default_uri)}&client_secret=#{$app_secret}&code=#{params['code']}"
-    URI.parse(URI.encode(token_url)).read
+    $app_token = URI.parse(URI.encode(token_url)).read
+    $app_token
   end
 end
-
-
 
 def failure(msg)
   { 'success'=>0,
