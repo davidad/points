@@ -60,11 +60,19 @@
       }
       function plus() {
 	var delta = parseInt(document.getElementsByClassName('pm_field')[0].value);
+  if(isNaN(delta)) {
+    document.getElementsByClassName('pm_field')[0].value=1;
+    delta = 1;
+  }
 	var url = prefix+"/setpoints?username="+username+"&apikey="+apikey+"&delta="+delta;
 	$.getJSON(url,{},update_points);
       }
       function minus() {
 	var delta = parseInt(document.getElementsByClassName('pm_field')[0].value);
+  if(isNaN(delta)) {
+    document.getElementsByClassName('pm_field')[0].value=1;
+    delta = 1;
+  }
 	var url = prefix+"/setpoints?username="+username+"&apikey="+apikey+"&delta=-"+delta;
 	$.getJSON(url,{},update_points);
       }
