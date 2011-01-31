@@ -13,7 +13,7 @@ end
 $app_secret = "fbf03b0a9c5175ddecc1ab01bbe5a370"
 $app_id = "196454990366058"
 $api_key = "590cdce4e47bccec1f78b5ff2729f7de"
-$default_url = "http://points.xvm.mit.edu:8080"
+$default_url = "http://points.xvm.mit.edu:8080/"
 
 get '/facebooklogin' do
   halt 302, {'Location' => "https://www.facebook.com/dialog/oauth?client_id=#{$app_id}&redirect_uri=#{$default_url}/authenticate"}, 'Loading...'
