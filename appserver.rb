@@ -25,6 +25,7 @@ get '/' do
     token_url = "https://graph.facebook.com/oauth/access_token?client_id=#{$app_id}&redirect_uri=#{URI.encode($default_uri)}&client_secret=#{$app_secret}&code=#{params['code']}"
     $app_token = URI.parse(URI.encode(token_url)).read
     $app_exp = Time.now
+    $app_exp
  #   $app_token = $app_token.split('&')[0].split('=')[1]
   end
 end
