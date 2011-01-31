@@ -75,3 +75,15 @@ get_or_post '/setpoints' do
   { 'success'=>1,
     'points' => new_points }.to_json
 end
+
+get_or_post '/getpoints/history' do
+  content_type :json
+  data = read_user(params)
+  if(!params['length']) then
+    length=50
+  else
+    length=params['length']
+  end
+  { 'success'=>1,
+    'points_history'=>data['points_history'][-1,-length] }.to_json
+end
