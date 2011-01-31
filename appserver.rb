@@ -18,7 +18,7 @@ get_or_post '/newuser' do
     { 'success'=>0,
       'error'=>"User #{username} already exists" }.to_json
   else
-    apikey = Digest::SHA1.hexdigest(Time.now_to_s + rand(1000000).to_s)
+    apikey = Digest::SHA1.hexdigest(Time.now.to_s + rand(1000000).to_s)
     userfile = File.new(username,"w+")
     userfile.puts(apikey)
     { 'success'=>1,
