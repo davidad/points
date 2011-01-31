@@ -24,9 +24,8 @@ get '/' do
   else
     token_url = "https://graph.facebook.com/oauth/access_token?client_id=#{$app_id}&redirect_uri=#{URI.encode($default_uri)}&client_secret=#{$app_secret}&code=#{params['code']}"
     $app_token = URI.parse(URI.encode(token_url)).read
-    $app_token = $app_token.split('&')[0].split('=')[1]
+    $app_token# = $app_token.split('&')[0].split('=')[1]
     $app_token
-    "something here"
   end
 #  halt 302, {'Location':'http://points.xvm.mit.edu:8080/static_app.html'}
   
