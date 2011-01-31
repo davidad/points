@@ -26,6 +26,8 @@ get '/' do
     $app_token = URI.parse(URI.encode(token_url)).read
     $app_token = $app_token.split('&')[0].split('=')[1]
   end
+  halt 302, {'Location':'http://points.xvm.mit.edu:8080/static_app.html'}
+  
 end
 
 def failure(msg)
